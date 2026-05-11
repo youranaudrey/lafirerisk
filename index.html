@@ -3,90 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LA Fire Risk Assessor</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <title>LA Fire Risk — Free Assessment for LA Residents</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --fire:       #D84E1F;
-      --fire-light: #F26B3A;
-      --ember:      #F5A623;
-      --smoke:      #2C2C2C;
-      --ash:        #5A5A5A;
-      --paper:      #FAF8F5;
-      --card:       #FFFFFF;
-      --border:     #E8E2DA;
-      --low:        #2E7D5E;
-      --moderate:   #D48B00;
-      --high:       #C84B1A;
-      --extreme:    #8B0000;
+      --black:#0A0A0A; --white:#FFFFFF; --accent:#E63B1F;
+      --gray-50:#F7F7F5; --gray-100:#EFEFED; --gray-200:#DDDDD9;
+      --gray-400:#9E9E97; --gray-600:#5C5C56; --gray-800:#2A2A26;
+      --low:#1A6B45; --moderate:#B07D00; --high:#C84010; --extreme:#7A0000;
+      --radius:10px; --radius-lg:16px;
     }
+    html { scroll-behavior: smooth; }
+    body { font-family:'Inter',sans-serif; background:var(--white); color:var(--black); font-size:15px; line-height:1.6; -webkit-font-smoothing:antialiased; }
 
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--paper);
-      color: var(--smoke);
-      min-height: 100vh;
+    /* ── NAV ── */
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-100);
+      padding: 0 2rem;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
+    .nav-logo { font-family:'Instrument Serif',serif; font-size:1.2rem; color:var(--black); text-decoration:none; display:flex; align-items:center; gap:8px; }
+    .nav-dot { width:8px; height:8px; border-radius:50%; background:var(--accent); display:inline-block; }
+    .nav-right { font-size:13px; color:var(--gray-600); }
 
     /* ── HERO ── */
     .hero {
-      background: var(--smoke);
-      color: #fff;
-      padding: 3.5rem 1.5rem 2.5rem;
+      padding: 5rem 2rem 4rem;
+      max-width: 680px;
+      margin: 0 auto;
       text-align: center;
-      position: relative;
-      overflow: hidden;
     }
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 60% 0%, rgba(216,78,31,.45) 0%, transparent 65%),
-                  radial-gradient(ellipse at 20% 100%, rgba(245,166,35,.2) 0%, transparent 60%);
-      pointer-events: none;
-    }
-    .hero-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--ember);
-      margin-bottom: .75rem;
-    }
-    .hero h1 {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(2rem, 5vw, 3.25rem);
-      line-height: 1.1;
-      margin-bottom: 1rem;
-    }
-    .hero p {
-      font-size: 1.05rem;
-      color: rgba(255,255,255,.72);
-      max-width: 520px;
-      margin: 0 auto 2rem;
-      line-height: 1.6;
-    }
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(255,255,255,.08);
-      border: 1px solid rgba(255,255,255,.15);
-      border-radius: 100px;
-      padding: 6px 16px;
-      font-size: 13px;
-      color: rgba(255,255,255,.8);
-    }
-    .dot { width: 7px; height: 7px; border-radius: 50%; background: #4CD88A; display: inline-block; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+    .hero-eyebrow { display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin-bottom:1.5rem; }
+    .hero-eyebrow::before,.hero-eyebrow::after { content:''; width:24px; height:1px; background:var(--accent); opacity:.5; }
+    .hero h1 { font-family:'Instrument Serif',serif; font-size:clamp(2.5rem,6vw,4rem); line-height:1.08; letter-spacing:-.02em; color:var(--black); margin-bottom:1.25rem; }
+    .hero h1 em { font-style:italic; color:var(--accent); }
+    .hero p { font-size:1.05rem; color:var(--gray-600); max-width:460px; margin:0 auto; line-height:1.7; }
 
-    /* ── SCORE BANNER ── */
-    .score-banner {
-      background: var(--card);
-      border-bottom: 1px solid var(--border);
-      padding: 1.25rem 1.5rem;
+    /* ── SCORE STRIP ── */
+    .score-strip {
+      background: var(--white);
+      border-top: 1px solid var(--gray-100);
+      border-bottom: 1px solid var(--gray-100);
+      padding: 12px 2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -95,816 +58,651 @@
       position: sticky;
       top: 0;
       z-index: 100;
-      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+      box-shadow: 0 2px 8px rgba(0,0,0,.04);
     }
-    .score-left { display: flex; align-items: baseline; gap: 8px; }
-    .score-num {
-      font-family: 'DM Serif Display', serif;
-      font-size: 2.25rem;
-      color: var(--smoke);
-      line-height: 1;
-      transition: color .4s;
-    }
-    .score-denom { font-size: 14px; color: var(--ash); }
-    .score-tier {
-      font-size: 12px;
-      font-weight: 600;
-      padding: 4px 12px;
-      border-radius: 100px;
-      background: #F0EFED;
-      color: var(--ash);
-      transition: background .4s, color .4s;
-    }
-    .bar-wrap { flex: 1; min-width: 140px; max-width: 320px; }
-    .bar-track {
-      height: 8px;
-      background: #EDEBE8;
-      border-radius: 20px;
-      overflow: hidden;
-    }
-    .bar-fill {
-      height: 100%;
-      border-radius: 20px;
-      width: 0%;
-      transition: width .5s ease, background .4s;
-      background: var(--low);
-    }
-    .bar-labels {
-      display: flex;
-      justify-content: space-between;
-      font-size: 10px;
-      color: #AAA;
-      margin-top: 4px;
-    }
+    .score-strip-left { display:flex; align-items:center; gap:12px; }
+    .score-label { font-size:11px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-400); }
+    .score-value { font-family:'Instrument Serif',serif; font-size:1.75rem; line-height:1; color:var(--black); }
+    .score-pill { font-size:11px; font-weight:600; letter-spacing:.05em; text-transform:uppercase; padding:4px 12px; border-radius:100px; background:var(--gray-100); color:var(--gray-600); transition:background .4s,color .4s; }
+    .bar-track { flex:1; min-width:120px; max-width:280px; height:4px; background:var(--gray-100); border-radius:4px; overflow:hidden; }
+    .bar-fill { height:100%; width:0%; border-radius:4px; background:var(--accent); transition:width .5s ease,background .4s; }
 
-    /* ── MAIN LAYOUT ── */
-    .main { max-width: 760px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    /* ── DIVIDER ── */
+    .divider { border:none; border-top:1px solid var(--gray-100); margin:0; }
 
-    /* ── SECTION CARD ── */
-    .card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 1.75rem;
-      margin-bottom: 1.25rem;
-    }
-    .card-header {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 1.5rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .card-icon {
-      width: 40px; height: 40px;
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 20px;
-      flex-shrink: 0;
-    }
-    .card-title { font-family: 'DM Serif Display', serif; font-size: 1.2rem; color: var(--smoke); }
-    .card-sub { font-size: 13px; color: var(--ash); margin-top: 2px; }
+    /* ── FORM ── */
+    .form-wrap { max-width:680px; margin:0 auto; padding:3rem 2rem 5rem; }
 
-    /* ── FIELDS ── */
-    .field { margin-bottom: 1.1rem; }
-    .field:last-child { margin-bottom: 0; }
-    .field label {
-      display: block;
-      font-size: 13px;
-      font-weight: 500;
-      color: var(--smoke);
-      margin-bottom: 6px;
-    }
-    .field label .req { color: var(--fire); margin-left: 2px; }
-    .impact {
-      font-size: 10px;
-      font-weight: 600;
-      letter-spacing: .04em;
-      padding: 2px 8px;
-      border-radius: 100px;
-      background: #FCEEE8;
-      color: var(--fire);
-      margin-left: 6px;
-      vertical-align: middle;
-    }
-    .field select, .field input[type="text"] {
-      width: 100%;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      color: var(--smoke);
-      background: var(--paper);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px 14px;
-      appearance: none;
-      outline: none;
-      transition: border-color .2s, box-shadow .2s;
-    }
-    .field select:focus, .field input:focus {
-      border-color: var(--fire-light);
-      box-shadow: 0 0 0 3px rgba(216,78,31,.1);
-    }
-    .select-wrap { position: relative; }
-    .select-wrap::after {
-      content: '▾';
-      position: absolute;
-      right: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      pointer-events: none;
-      color: var(--ash);
-      font-size: 13px;
-    }
-    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    @media(max-width:520px){ .grid2 { grid-template-columns: 1fr; } }
+    .section { margin-bottom:3rem; }
+    .section-header { display:flex; align-items:flex-start; gap:1rem; margin-bottom:1.5rem; padding-bottom:1rem; border-bottom:1px solid var(--gray-100); }
+    .section-num { font-family:'Instrument Serif',serif; font-size:2rem; color:var(--gray-200); line-height:1; flex-shrink:0; width:36px; }
+    .section-title { font-family:'Instrument Serif',serif; font-size:1.35rem; color:var(--black); margin-bottom:2px; }
+    .section-sub { font-size:13px; color:var(--gray-400); }
 
-    .tip {
-      font-size: 12px;
-      color: var(--ash);
-      background: #F7F5F1;
-      border-left: 3px solid var(--ember);
-      border-radius: 0 8px 8px 0;
-      padding: 8px 12px;
-      margin-top: 7px;
-      line-height: 1.5;
-    }
+    .field { margin-bottom:1.1rem; }
+    .field:last-child { margin-bottom:0; }
+    .field label { display:flex; align-items:center; gap:6px; font-size:13px; font-weight:500; color:var(--gray-800); margin-bottom:7px; }
+    .req { color:var(--accent); }
+    .impact { font-size:10px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--accent); background:#FEF0EC; padding:2px 7px; border-radius:4px; }
 
-    /* ── SUBMIT ── */
-    .submit-wrap { margin-top: 1.5rem; }
+    .select-wrap { position:relative; }
+    .select-wrap::after { content:'↓'; position:absolute; right:14px; top:50%; transform:translateY(-50%); pointer-events:none; color:var(--gray-400); font-size:12px; }
+    select { width:100%; font-family:'Inter',sans-serif; font-size:14px; color:var(--black); background:var(--gray-50); border:1px solid var(--gray-200); border-radius:var(--radius); padding:11px 40px 11px 14px; appearance:none; outline:none; cursor:pointer; transition:border-color .2s,background .2s; }
+    select:hover { border-color:var(--gray-400); }
+    select:focus { border-color:var(--black); background:var(--white); box-shadow:0 0 0 3px rgba(10,10,10,.06); }
+
+    .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    @media(max-width:540px){ .grid2 { grid-template-columns:1fr; } }
+
+    .tip { display:flex; gap:8px; font-size:12px; color:var(--gray-600); background:var(--gray-50); border-radius:var(--radius); padding:10px 12px; margin-top:8px; line-height:1.5; }
+    .tip-star { flex-shrink:0; font-size:13px; font-weight:600; color:var(--gray-400); }
+
+    .privacy-note { display:flex; align-items:flex-start; gap:10px; background:var(--gray-50); border:1px solid var(--gray-100); border-radius:var(--radius); padding:14px 16px; margin-bottom:2rem; font-size:13px; color:var(--gray-600); line-height:1.5; }
+
+    /* ── BUTTONS ── */
+    .submit-section { margin-top:2rem; }
     .submit-btn {
-      width: 100%;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 16px;
-      font-weight: 600;
-      color: #fff;
-      background: var(--fire);
-      border: none;
-      border-radius: 12px;
-      padding: 16px;
-      cursor: pointer;
-      transition: background .2s, transform .1s;
-      letter-spacing: .01em;
+      width:100%;
+      font-family:'Inter',sans-serif;
+      font-size:15px;
+      font-weight:600;
+      color:var(--black);
+      background:var(--white);
+      border:1.5px solid var(--black);
+      border-radius:var(--radius-lg);
+      padding:17px;
+      cursor:pointer;
+      letter-spacing:.01em;
+      transition:background .2s, color .2s, transform .1s;
     }
-    .submit-btn:hover { background: var(--fire-light); transform: translateY(-1px); }
-    .submit-btn:active { transform: translateY(0); }
-    .submit-note {
-      text-align: center;
-      font-size: 12px;
-      color: var(--ash);
-      margin-top: 10px;
-    }
+    .submit-btn:hover { background:var(--gray-50); transform:translateY(-1px); }
+    .submit-btn:active { transform:translateY(0); }
 
     /* ── REPORT ── */
-    #report-section { display: none; }
-    .report-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 2rem;
-      margin-bottom: 1.25rem;
+    #report-section { display:none; }
+    .report-wrap { max-width:680px; margin:0 auto; padding:3rem 2rem 5rem; }
+    .report-header { margin-bottom:2rem; padding-bottom:1.5rem; border-bottom:1px solid var(--gray-100); }
+    .report-eyebrow { font-size:12px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--gray-400); margin-bottom:.5rem; }
+    .report-title { font-family:'Instrument Serif',serif; font-size:clamp(1.75rem,4vw,2.5rem); line-height:1.1; color:var(--black); margin-bottom:.5rem; }
+    .report-meta { font-size:13px; color:var(--gray-400); }
+    .report-score-block { display:inline-flex; align-items:center; gap:12px; background:var(--gray-50); border:1px solid var(--gray-100); border-radius:var(--radius-lg); padding:14px 20px; margin-bottom:2rem; }
+    .report-score-num { font-family:'Instrument Serif',serif; font-size:2.5rem; line-height:1; color:var(--black); }
+    .report-score-denom { font-size:14px; color:var(--gray-400); align-self:flex-end; padding-bottom:4px; }
+    .report-tier-pill { font-size:12px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; padding:5px 14px; border-radius:100px; }
+    .report-body-text { font-size:15px; line-height:1.8; color:var(--black); }
+    .report-body-text h2 { font-family:'Instrument Serif',serif; font-size:1.3rem; font-weight:400; color:var(--black); margin:2rem 0 .75rem; padding-top:1.5rem; border-top:1px solid var(--gray-100); }
+    .report-body-text h2:first-child { margin-top:0; padding-top:0; border-top:none; }
+    .report-body-text h3 { font-size:14px; font-weight:600; color:var(--black); margin:1.25rem 0 .4rem; }
+    .report-body-text ul { padding-left:1.25rem; margin:.75rem 0; }
+    .report-body-text li { margin:.4rem 0; }
+    .report-body-text strong { font-weight:600; }
+    .report-body-text hr { border:none; border-top:1px solid var(--gray-100); margin:1.5rem 0; }
+
+    .loading-state { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:4rem 2rem; gap:1rem; text-align:center; }
+    .spinner { width:28px; height:28px; border:2px solid var(--gray-200); border-top-color:var(--black); border-radius:50%; animation:spin .7s linear infinite; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    .loading-label { font-size:14px; color:var(--gray-600); }
+    .loading-sub { font-size:12px; color:var(--gray-400); }
+
+    .reset-btn {
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      font-family:'Inter',sans-serif;
+      font-size:13px;
+      font-weight:500;
+      color:var(--black);
+      background:var(--white);
+      border:1.5px solid var(--black);
+      border-radius:var(--radius);
+      padding:9px 16px;
+      cursor:pointer;
+      margin-top:2rem;
+      transition:background .2s, color .2s;
     }
-    .report-header {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 1.5rem;
-      padding-bottom: 1.25rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .report-grade {
-      width: 64px; height: 64px;
-      border-radius: 14px;
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'DM Serif Display', serif;
-      font-size: 2rem;
-      color: #fff;
-      flex-shrink: 0;
-    }
-    .report-title { font-family: 'DM Serif Display', serif; font-size: 1.4rem; }
-    .report-sub { font-size: 13px; color: var(--ash); margin-top: 3px; }
-    .report-body { font-size: 14px; line-height: 1.75; color: var(--smoke); white-space: pre-wrap; }
-    .loading-wrap {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 2rem;
-      color: var(--ash);
-      font-size: 14px;
-    }
-    .spinner {
-      width: 22px; height: 22px;
-      border: 2px solid var(--border);
-      border-top-color: var(--fire);
-      border-radius: 50%;
-      animation: spin .8s linear infinite;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    .reset-btn:hover { background:var(--gray-50); }
+
+    /* ── FOOTER ── */
+    footer { background:var(--white); border-top:1px solid var(--gray-100); padding:3rem 2rem; }
+    .footer-inner { max-width:680px; margin:0 auto; }
+    .footer-logo { font-family:'Instrument Serif',serif; font-size:1.1rem; margin-bottom:1rem; display:flex; align-items:center; gap:8px; color:var(--black); }
+    .footer-disclaimer { font-size:12px; color:var(--gray-400); line-height:1.7; max-width:560px; margin-bottom:2rem; }
+    .footer-bottom { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; padding-top:1.5rem; border-top:1px solid var(--gray-100); font-size:12px; color:var(--gray-400); }
+    .footer-links { display:flex; gap:1.25rem; }
+    .footer-links a { color:var(--gray-400); text-decoration:none; transition:color .2s; }
+    .footer-links a:hover { color:var(--black); }
   </style>
 </head>
 <body>
 
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#"><span class="nav-dot"></span>LA Fire Risk</a>
+  <span class="nav-right">Los Angeles County</span>
+</nav>
+
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-label">Los Angeles County</div>
-  <h1>Know Your<br>Fire Risk</h1>
-  <p>Answer a few questions about your home and get a free, AI-powered fire risk assessment with personalized prevention steps.</p>
-  <div class="hero-badge">
-    <span class="dot"></span>
-    Powered by CAL FIRE data &amp; AI analysis
-  </div>
+  <div class="hero-eyebrow">Los Angeles County</div>
+  <h1>Know your<br><em>fire risk.</em></h1>
+  <p>Answer a few questions about where you live to get a personalized fire risk assessment with specific steps to protect you and your home.</p>
 </div>
 
-<!-- STICKY SCORE BANNER -->
-<div class="score-banner">
-  <div class="score-left">
-    <span class="score-num" id="score-num">—</span>
-    <span class="score-denom">/ 100</span>
-    <span class="score-tier" id="score-tier">Not yet scored</span>
+<!-- SCORE STRIP -->
+<div class="score-strip">
+  <div class="score-strip-left">
+    <span class="score-label">Risk score</span>
+    <span class="score-value" id="score-num">—</span>
+    <span class="score-pill" id="score-pill">Answer questions below</span>
   </div>
-  <div class="bar-wrap">
-    <div class="bar-track"><div class="bar-fill" id="bar-fill"></div></div>
-    <div class="bar-labels"><span>Low</span><span>Moderate</span><span>High</span><span>Extreme</span></div>
-  </div>
+  <div class="bar-track"><div class="bar-fill" id="bar-fill"></div></div>
 </div>
 
-<!-- QUESTIONNAIRE -->
-<div class="main" id="form-section">
+<hr class="divider">
 
-  <!-- 1. LOCATION -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-icon" style="background:#FEF0E8;">🗺️</div>
-      <div>
-        <div class="card-title">Location</div>
-        <div class="card-sub">Where is the property located?</div>
-      </div>
+<!-- FORM -->
+<div class="form-wrap" id="form-section">
+
+  <div class="privacy-note">
+    <span>🔒</span>
+    <span>Your answers are used only to generate your report and are never stored, sold, or shared. No account required.</span>
+  </div>
+
+  <!-- 00 ABOUT YOU -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">00</div>
+      <div><div class="section-title">About You</div><div class="section-sub">Helps us tailor your report to your situation</div></div>
     </div>
-
     <div class="field">
-      <label>Street address <span class="req">*</span></label>
-      <input type="text" id="addr" placeholder="e.g. 1234 Mulholland Dr, Los Angeles, CA">
+      <label>Do you own or rent your home? <span class="req">*</span></label>
+      <div class="select-wrap"><select id="tenure" onchange="recalc()">
+        <option value="">Select...</option>
+        <option value="own">I own my home</option>
+        <option value="rent">I rent my home</option>
+        <option value="other">Other — I live with family or in a shared arrangement</option>
+      </select></div>
     </div>
+  </div>
 
+  <!-- 01 LOCATION -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <div><div class="section-title">Location & Environment</div><div class="section-sub">Where is the property and what surrounds it?</div></div>
+    </div>
     <div class="grid2">
       <div class="field">
-        <label>Neighborhood / area <span class="req">*</span> <span class="impact">HIGH IMPACT</span></label>
-        <div class="select-wrap">
-          <select id="neighborhood" onchange="recalc()">
-            <option value="">Select…</option>
-            <option value="3">Pacific Palisades / Malibu</option>
-            <option value="3">Topanga / Calabasas</option>
-            <option value="3">Altadena / Pasadena foothills</option>
-            <option value="2">Hollywood Hills / Laurel Canyon</option>
-            <option value="2">La Cañada / La Crescenta</option>
-            <option value="2">Chatsworth / Porter Ranch</option>
-            <option value="1">Burbank / Glendale (flatland)</option>
-            <option value="1">West LA / Santa Monica</option>
-            <option value="0">Downtown / urban core</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="field">
-        <label>Topography <span class="req">*</span> <span class="impact">HIGH IMPACT</span></label>
-        <div class="select-wrap">
-          <select id="topo" onchange="recalc()">
-            <option value="">Select…</option>
-            <option value="3">Top of hill or ridge</option>
-            <option value="3">Canyon bottom or canyon-adjacent</option>
-            <option value="2">Mid-slope (15–30°)</option>
-            <option value="1">Gentle slope (under 15°)</option>
-            <option value="0">Flat / valley floor</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <div class="field">
-      <label>Distance to open wildland / brush <span class="req">*</span> <span class="impact">HIGH IMPACT</span></label>
-      <div class="select-wrap">
-        <select id="wildland" onchange="recalc()">
+        <label>Neighborhood <span class="req">*</span><span class="impact">Key factor</span></label>
+        <div class="select-wrap"><select id="neighborhood" onchange="recalc()">
           <option value="">Select…</option>
-          <option value="3">Directly adjacent (property touches open land)</option>
-          <option value="2">Within 1 block (under 300 ft)</option>
-          <option value="1">Within ¼ mile</option>
-          <option value="0">More than ¼ mile away</option>
-        </select>
+          <option value="3">Pacific Palisades / Malibu</option>
+          <option value="3">Topanga / Calabasas</option>
+          <option value="3">Altadena / Pasadena foothills</option>
+          <option value="2">Hollywood Hills / Laurel Canyon</option>
+          <option value="2">La Cañada / La Crescenta</option>
+          <option value="2">Chatsworth / Porter Ranch</option>
+          <option value="1">Burbank / Glendale (flatland)</option>
+          <option value="1">West LA / Santa Monica</option>
+          <option value="0">Downtown / urban core</option>
+        </select></div>
       </div>
+      <div class="field">
+        <label>Topography <span class="req">*</span><span class="impact">Key factor</span></label>
+        <div class="select-wrap"><select id="topo" onchange="recalc()">
+          <option value="">Select…</option>
+          <option value="3">Top of hill or ridge</option>
+          <option value="3">Canyon bottom or canyon-adjacent</option>
+          <option value="2">Mid-slope (15–30°)</option>
+          <option value="1">Gentle slope (under 15°)</option>
+          <option value="0">Flat / valley floor</option>
+        </select></div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Distance to open wildland or brush <span class="req">*</span><span class="impact">Key factor</span></label>
+      <div class="select-wrap"><select id="wildland" onchange="recalc()">
+        <option value="">Select…</option>
+        <option value="3">Directly adjacent — property touches open land</option>
+        <option value="2">Within 1 block (under 300 ft)</option>
+        <option value="1">Within ¼ mile</option>
+        <option value="0">More than ¼ mile away</option>
+      </select></div>
     </div>
   </div>
 
-  <!-- 2. ROOF -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-icon" style="background:#FEF0E8;">🏠</div>
-      <div>
-        <div class="card-title">Roof</div>
-        <div class="card-sub">The single most important structural factor</div>
-      </div>
+  <!-- 02 ROOF -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <div><div class="section-title">Roof</div><div class="section-sub">The single most important structural factor in fire survival</div></div>
     </div>
-
     <div class="grid2">
       <div class="field">
-        <label>Roof material <span class="req">*</span> <span class="impact">HIGH IMPACT</span></label>
-        <div class="select-wrap">
-          <select id="roof" onchange="recalc()">
-            <option value="">Select…</option>
-            <option value="0">Class A — clay/concrete tile</option>
-            <option value="0">Class A — metal</option>
-            <option value="0">Class A — asphalt shingles</option>
-            <option value="1">Class B — treated wood shingle</option>
-            <option value="3">Class C — wood shake (untreated)</option>
-            <option value="2">Unknown</option>
-          </select>
-        </div>
+        <label>Roof material <span class="req">*</span><span class="impact">Key factor</span></label>
+        <div class="select-wrap"><select id="roof" onchange="recalc()">
+          <option value="">Select…</option>
+          <option value="0">Class A — clay or concrete tile</option>
+          <option value="0">Class A — metal</option>
+          <option value="0">Class A — asphalt shingles</option>
+          <option value="1">Class B — treated wood shingle</option>
+          <option value="3">Class C — wood shake (untreated)</option>
+          <option value="2">Unknown</option>
+        </select></div>
       </div>
-
       <div class="field">
         <label>Roof age</label>
-        <div class="select-wrap">
-          <select id="roofage" onchange="recalc()">
-            <option value="">Select…</option>
-            <option value="0">Under 10 years</option>
-            <option value="1">10–20 years</option>
-            <option value="2">20–30 years</option>
-            <option value="2">Over 30 years</option>
-            <option value="2">Don't know</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <div class="field">
-      <label>Attic vents <span class="req">*</span> <span class="impact">HIGH IMPACT</span></label>
-      <div class="select-wrap">
-        <select id="vents" onchange="recalc()">
+        <div class="select-wrap"><select id="roofage" onchange="recalc()">
           <option value="">Select…</option>
-          <option value="0">Ember-resistant mesh vents (1/16" screen)</option>
-          <option value="1">Standard screen vents</option>
-          <option value="3">Open vents / no screen</option>
+          <option value="0">Under 10 years</option>
+          <option value="1">10–20 years</option>
+          <option value="2">20–30 years</option>
+          <option value="2">Over 30 years</option>
           <option value="2">Don't know</option>
-        </select>
+        </select></div>
       </div>
-      <div class="tip">💡 Embers enter open attic vents and ignite insulation — this is how most LA homes burn even before fire reaches the structure directly.</div>
     </div>
-
+    <div class="field">
+      <label>Attic vents <span class="req">*</span><span class="impact">Key factor</span></label>
+      <div class="select-wrap"><select id="vents" onchange="recalc()">
+        <option value="">Select…</option>
+        <option value="0">Ember-resistant mesh (1/16" screen)</option>
+        <option value="1">Standard screen vents</option>
+        <option value="3">Open vents — no screen</option>
+        <option value="2">Don't know</option>
+      </select></div>
+      <div class="tip"><span class="tip-star">*</span>Embers can travel over a mile and ignite an attic through open vents — this is how most LA homes burn before fire even reaches the walls.</div>
+    </div>
     <div class="field">
       <label>Eaves (underside of roof overhang)</label>
-      <div class="select-wrap">
-        <select id="eaves" onchange="recalc()">
-          <option value="">Select…</option>
-          <option value="0">Enclosed / boxed eaves</option>
-          <option value="2">Open eaves (exposed rafters visible)</option>
-          <option value="1">Don't know</option>
-        </select>
-      </div>
+      <div class="select-wrap"><select id="eaves" onchange="recalc()">
+        <option value="">Select…</option>
+        <option value="0">Enclosed or boxed eaves</option>
+        <option value="2">Open eaves — exposed rafters visible</option>
+        <option value="1">Don't know</option>
+      </select></div>
     </div>
   </div>
 
-  <!-- 3. STRUCTURE -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-icon" style="background:#FEF0E8;">🧱</div>
-      <div>
-        <div class="card-title">Structure</div>
-        <div class="card-sub">Walls, windows, and exterior materials</div>
-      </div>
+  <!-- 03 STRUCTURE -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <div><div class="section-title">Structure</div><div class="section-sub">Walls, windows, and exterior materials</div></div>
     </div>
-
     <div class="grid2">
       <div class="field">
         <label>Year built <span class="req">*</span></label>
-        <div class="select-wrap">
-          <select id="yearblt" onchange="recalc()">
-            <option value="">Select…</option>
-            <option value="0">2008 or later (WUI codes)</option>
-            <option value="1">1991–2007</option>
-            <option value="2">1970–1990</option>
-            <option value="2">Before 1970</option>
-          </select>
-        </div>
+        <div class="select-wrap"><select id="yearblt" onchange="recalc()">
+          <option value="">Select…</option>
+          <option value="0">2008 or later — WUI codes apply</option>
+          <option value="1">1991–2007</option>
+          <option value="2">1970–1990</option>
+          <option value="2">Before 1970</option>
+        </select></div>
       </div>
-
       <div class="field">
         <label>Wall / siding material <span class="req">*</span></label>
-        <div class="select-wrap">
-          <select id="walls" onchange="recalc()">
-            <option value="">Select…</option>
-            <option value="0">Stucco or masonry</option>
-            <option value="0">Brick or concrete block</option>
-            <option value="1">Fiber cement (Hardie board)</option>
-            <option value="2">Vinyl siding</option>
-            <option value="3">Wood siding or lap board</option>
-            <option value="3">Log construction</option>
-          </select>
-        </div>
+        <div class="select-wrap"><select id="walls" onchange="recalc()">
+          <option value="">Select…</option>
+          <option value="0">Stucco or masonry</option>
+          <option value="0">Brick or concrete block</option>
+          <option value="1">Fiber cement (Hardie board)</option>
+          <option value="2">Vinyl siding</option>
+          <option value="3">Wood siding or lap board</option>
+          <option value="3">Log construction</option>
+        </select></div>
       </div>
     </div>
-
     <div class="grid2">
       <div class="field">
         <label>Window type</label>
-        <div class="select-wrap">
-          <select id="windows" onchange="recalc()">
-            <option value="">Select…</option>
-            <option value="0">Dual-pane or tempered glass</option>
-            <option value="2">Single-pane glass</option>
-            <option value="1">Don't know</option>
-          </select>
-        </div>
+        <div class="select-wrap"><select id="windows" onchange="recalc()">
+          <option value="">Select…</option>
+          <option value="0">Dual-pane or tempered glass</option>
+          <option value="2">Single-pane glass</option>
+          <option value="1">Don't know</option>
+        </select></div>
       </div>
-
       <div class="field">
-        <label>Deck or patio material <span class="impact">HIGH IMPACT</span></label>
-        <div class="select-wrap">
-          <select id="deck" onchange="recalc()">
-            <option value="">Select…</option>
-            <option value="0">No deck</option>
-            <option value="0">Concrete or pavers</option>
-            <option value="1">Composite decking (Trex etc.)</option>
-            <option value="2">Pressure-treated wood</option>
-            <option value="3">Untreated wood deck</option>
-          </select>
-        </div>
+        <label>Deck or patio material <span class="impact">Key factor</span></label>
+        <div class="select-wrap"><select id="deck" onchange="recalc()">
+          <option value="">Select…</option>
+          <option value="0">No deck</option>
+          <option value="0">Concrete or pavers</option>
+          <option value="1">Composite decking (Trex etc.)</option>
+          <option value="2">Pressure-treated wood</option>
+          <option value="3">Untreated wood deck</option>
+          <option value="0">Not applicable — I rent and don't control this</option>
+        </select></div>
       </div>
     </div>
-
     <div class="field">
       <label>Fence material and connection to house</label>
-      <div class="select-wrap">
-        <select id="fence" onchange="recalc()">
-          <option value="">Select…</option>
-          <option value="0">No fence, or metal / block wall only</option>
-          <option value="1">Wood fence, does not touch house</option>
-          <option value="3">Wood fence attached directly to house</option>
-        </select>
-      </div>
-      <div class="tip">💡 A wood fence attached to your house acts as a fire runway — one of the most overlooked risks in LA neighborhoods.</div>
+      <div class="select-wrap"><select id="fence" onchange="recalc()">
+        <option value="">Select…</option>
+        <option value="0">No fence, or metal / block wall only</option>
+        <option value="1">Wood fence — does not touch house</option>
+        <option value="3">Wood fence attached directly to house</option>
+        <option value="0">Not applicable — I rent and don't control this</option>
+      </select></div>
+      <div class="tip"><span class="tip-star">*</span>A wood fence connected to your house acts as a direct fire pathway to the structure — one of the most overlooked risks in LA neighborhoods.</div>
     </div>
   </div>
 
-  <!-- 4. VEGETATION -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-icon" style="background:#EDFAF2;">🌿</div>
-      <div>
-        <div class="card-title">Vegetation &amp; Defensible Space</div>
-        <div class="card-sub">What surrounds the house?</div>
-      </div>
+  <!-- 04 VEGETATION -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <div><div class="section-title">Vegetation & Defensible Space</div><div class="section-sub">What surrounds the house within 100 feet?</div></div>
     </div>
-
     <div class="field">
-      <label>Zone 1 — 0 to 30 feet from house <span class="impact">HIGH IMPACT</span></label>
-      <div class="select-wrap">
-        <select id="zone1" onchange="recalc()">
-          <option value="">Select…</option>
-          <option value="0">Cleared — gravel, concrete, succulents only</option>
-          <option value="1">Mostly cleared — some low plants, well-maintained lawn</option>
-          <option value="2">Partially cleared — some shrubs and dry vegetation</option>
-          <option value="3">Not cleared — dense shrubs, dry brush, tall grass</option>
-        </select>
-      </div>
+      <label>Zone 1 — 0 to 30 feet from house <span class="impact">Key factor</span></label>
+      <div class="select-wrap"><select id="zone1" onchange="recalc()">
+        <option value="">Select…</option>
+        <option value="0">Cleared — gravel, concrete, or succulents only</option>
+        <option value="1">Mostly cleared — some low plants, maintained lawn</option>
+        <option value="2">Partially cleared — some shrubs and dry vegetation</option>
+        <option value="3">Not cleared — dense shrubs, dry brush, or tall grass</option>
+      </select></div>
     </div>
-
     <div class="field">
       <label>Zone 2 — 30 to 100 feet from house</label>
-      <div class="select-wrap">
-        <select id="zone2" onchange="recalc()">
-          <option value="">Select…</option>
-          <option value="0">Well spaced, thinned trees and shrubs</option>
-          <option value="1">Moderate — some clearing done</option>
-          <option value="2">Dense vegetation, not thinned</option>
-          <option value="3">Heavy chaparral or eucalyptus</option>
-        </select>
-      </div>
+      <div class="select-wrap"><select id="zone2" onchange="recalc()">
+        <option value="">Select…</option>
+        <option value="0">Well spaced, thinned trees and shrubs</option>
+        <option value="1">Moderate — some clearing done</option>
+        <option value="2">Dense vegetation, not thinned</option>
+        <option value="3">Heavy chaparral or eucalyptus</option>
+      </select></div>
     </div>
-
     <div class="grid2">
       <div class="field">
-        <label>Propane / gas tank on property</label>
-        <div class="select-wrap">
-          <select id="tank" onchange="recalc()">
-            <option value="">Select…</option>
-            <option value="0">No</option>
-            <option value="1">Yes, located away from structure</option>
-            <option value="2">Yes, near or under structure</option>
-          </select>
-        </div>
+        <label>Propane or gas tank on property</label>
+        <div class="select-wrap"><select id="tank" onchange="recalc()">
+          <option value="">Select…</option>
+          <option value="0">No</option>
+          <option value="1">Yes — located away from structure</option>
+          <option value="2">Yes — near or under structure</option>
+        </select></div>
       </div>
-
       <div class="field">
         <label>Firewood storage</label>
-        <div class="select-wrap">
-          <select id="firewood" onchange="recalc()">
-            <option value="">Select…</option>
-            <option value="0">None / not applicable</option>
-            <option value="0">Stored 30+ feet from house</option>
-            <option value="2">Stored against or under the house</option>
-          </select>
-        </div>
+        <div class="select-wrap"><select id="firewood" onchange="recalc()">
+          <option value="">Select…</option>
+          <option value="0">None</option>
+          <option value="0">Stored 30+ feet from house</option>
+          <option value="2">Stored against or under the house</option>
+        </select></div>
       </div>
     </div>
   </div>
 
-  <!-- 5. SAFETY SYSTEMS -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-icon" style="background:#EDFAF2;">🛡️</div>
-      <div>
-        <div class="card-title">Fire Safety Systems</div>
-        <div class="card-sub">What protections are already in place?</div>
-      </div>
+  <!-- 05 SAFETY -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">05</div>
+      <div><div class="section-title">Safety Systems</div><div class="section-sub">What protections are already in place?</div></div>
     </div>
-
     <div class="grid2">
       <div class="field">
         <label>Interior sprinkler system</label>
-        <div class="select-wrap">
-          <select id="sprinkler" onchange="recalc()">
-            <option value="">Select…</option>
-            <option value="-2">Yes — full system installed</option>
-            <option value="0">No</option>
-          </select>
-        </div>
+        <div class="select-wrap"><select id="sprinkler" onchange="recalc()">
+          <option value="">Select…</option>
+          <option value="-2">Yes — full system installed</option>
+          <option value="0">No</option>
+        </select></div>
       </div>
-
       <div class="field">
         <label>Smoke detectors</label>
-        <div class="select-wrap">
-          <select id="smoke" onchange="recalc()">
-            <option value="">Select…</option>
-            <option value="0">Yes, working and recently tested</option>
-            <option value="1">Present but unsure if working</option>
-            <option value="1">None</option>
-          </select>
-        </div>
+        <div class="select-wrap"><select id="smoke" onchange="recalc()">
+          <option value="">Select…</option>
+          <option value="0">Yes, working and recently tested</option>
+          <option value="1">Present but unsure if working</option>
+          <option value="1">None</option>
+        </select></div>
       </div>
     </div>
-
     <div class="grid2">
       <div class="field">
         <label>Garden hose access on all sides</label>
-        <div class="select-wrap">
-          <select id="hose" onchange="recalc()">
-            <option value="">Select…</option>
-            <option value="-1">Yes</option>
-            <option value="0">No</option>
-          </select>
-        </div>
+        <div class="select-wrap"><select id="hose" onchange="recalc()">
+          <option value="">Select…</option>
+          <option value="-1">Yes</option>
+          <option value="0">No</option>
+        </select></div>
       </div>
-
       <div class="field">
         <label>Current insurance status</label>
-        <div class="select-wrap">
-          <select id="insurance" onchange="recalc()">
-            <option value="">Select…</option>
-            <option value="0">Insured — standard policy</option>
-            <option value="1">Insured — FAIR Plan only</option>
-            <option value="2">Recently dropped by insurer</option>
-            <option value="0">Not sure</option>
-          </select>
-        </div>
+        <div class="select-wrap"><select id="insurance" onchange="recalc()">
+          <option value="">Select…</option>
+          <option value="0">I own — insured with standard policy</option>
+          <option value="1">I own — insured with FAIR Plan only</option>
+          <option value="2">I own — recently dropped by insurer</option>
+          <option value="0">I rent — insured with renter's insurance</option>
+          <option value="1">I rent — no renter's insurance</option>
+          <option value="0">Not sure</option>
+        </select></div>
       </div>
     </div>
   </div>
 
-  <!-- 6. ACCESS & EVACUATION -->
-  <div class="card">
-    <div class="card-header">
-      <div class="card-icon" style="background:#FFF8E8;">🚗</div>
-      <div>
-        <div class="card-title">Access &amp; Evacuation</div>
-        <div class="card-sub">Can you get out — and can help get in?</div>
-      </div>
+  <!-- 06 EVACUATION -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">06</div>
+      <div><div class="section-title">Access & Evacuation</div><div class="section-sub">Can you get out — and can help get in?</div></div>
     </div>
-
     <div class="grid2">
       <div class="field">
-        <label>Road access to property <span class="impact">HIGH IMPACT</span></label>
-        <div class="select-wrap">
-          <select id="road" onchange="recalc()">
-            <option value="">Select…</option>
-            <option value="0">Multiple road exits from neighborhood</option>
-            <option value="2">Single road in / out</option>
-            <option value="3">Single narrow road, dead end</option>
-          </select>
-        </div>
+        <label>Road access to property <span class="impact">Key factor</span></label>
+        <div class="select-wrap"><select id="road" onchange="recalc()">
+          <option value="">Select…</option>
+          <option value="0">Multiple road exits from neighborhood</option>
+          <option value="2">Single road in and out</option>
+          <option value="3">Single narrow road — dead end</option>
+        </select></div>
       </div>
-
       <div class="field">
         <label>Distance to nearest fire station</label>
-        <div class="select-wrap">
-          <select id="firestation" onchange="recalc()">
-            <option value="">Select…</option>
-            <option value="0">Under 1 mile</option>
-            <option value="1">1–3 miles</option>
-            <option value="2">Over 3 miles</option>
-          </select>
-        </div>
+        <div class="select-wrap"><select id="firestation" onchange="recalc()">
+          <option value="">Select…</option>
+          <option value="0">Under 1 mile</option>
+          <option value="1">1–3 miles</option>
+          <option value="2">Over 3 miles</option>
+        </select></div>
       </div>
     </div>
-
     <div class="field">
       <label>Household evacuation plan</label>
-      <div class="select-wrap">
-        <select id="evacplan" onchange="recalc()">
-          <option value="">Select…</option>
-          <option value="-1">Yes — written plan, everyone knows it</option>
-          <option value="0">Informal understanding</option>
-          <option value="1">No plan</option>
-        </select>
-      </div>
+      <div class="select-wrap"><select id="evacplan" onchange="recalc()">
+        <option value="">Select…</option>
+        <option value="-1">Yes — written plan, everyone knows it</option>
+        <option value="0">Informal understanding</option>
+        <option value="1">No plan</option>
+      </select></div>
     </div>
   </div>
 
   <!-- SUBMIT -->
-  <div class="submit-wrap">
-    <button class="submit-btn" onclick="generateReport()">
-      Generate My Fire Risk Report →
-    </button>
-    <p class="submit-note">Free assessment · Your data is not stored · Powered by AI</p>
+  <div class="submit-section">
+    <button class="submit-btn" onclick="generateReport()">Generate My Fire Risk Report →</button>
   </div>
 
 </div>
 
-<!-- REPORT SECTION -->
-<div class="main" id="report-section">
-  <div class="report-card" id="report-card">
+<!-- REPORT -->
+<div id="report-section">
+  <div class="report-wrap">
     <div class="report-header">
-      <div class="report-grade" id="report-grade">—</div>
-      <div>
-        <div class="report-title" id="report-title">Generating your report…</div>
-        <div class="report-sub" id="report-sub">This takes about 10–15 seconds</div>
-      </div>
+      <div class="report-eyebrow">Your Assessment</div>
+      <div class="report-title" id="report-title">Generating your report…</div>
+      <div class="report-meta" id="report-meta"></div>
+    </div>
+    <div id="report-score-block" class="report-score-block" style="display:none">
+      <span class="report-score-num" id="report-score-num"></span>
+      <span class="report-score-denom">/ 100</span>
+      <span class="report-tier-pill" id="report-tier-pill"></span>
     </div>
     <div id="report-body">
-      <div class="loading-wrap">
+      <div class="loading-state">
         <div class="spinner"></div>
-        Analyzing your property data and generating personalized recommendations…
+        <div class="loading-label">Analyzing your property…</div>
+        <div class="loading-sub">This takes about 15 seconds</div>
+      </div>
+    </div>
+    <button class="reset-btn" onclick="resetForm()">← Start a new assessment</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo"><span class="nav-dot"></span>LA Fire Risk</div>
+    <p class="footer-disclaimer">
+      This tool provides general fire risk information for educational purposes only. Results are based on self-reported information and should not be considered a professional inspection, engineering assessment, or insurance evaluation. Always consult a licensed professional and your local fire department for official guidance. Data informed by CAL FIRE and LA County fire safety guidelines.
+    </p>
+    <div class="footer-bottom">
+      <span>© 2025 LA Fire Risk. Built for anyone who lives in Los Angeles County.</span>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Disclaimer</a>
+        <a href="mailto:hello@lafirerisk.com">Contact</a>
       </div>
     </div>
   </div>
-  <button class="submit-btn" onclick="resetForm()" style="max-width:760px;display:block;margin:0 auto;">
-    ← Start Over
-  </button>
-</div>
+</footer>
 
 <script>
-  // ── SCORING ──────────────────────────────────────────────
-  const FIELDS = ['neighborhood','topo','wildland','roof','roofage','vents','eaves',
+  const FIELDS = ['tenure','neighborhood','topo','wildland','roof','roofage','vents','eaves',
                   'yearblt','walls','windows','deck','fence','zone1','zone2','tank',
                   'firewood','sprinkler','smoke','hose','insurance','road','firestation','evacplan'];
-
   const WEIGHTS = {
-    neighborhood:10, topo:8,  wildland:9,
-    roof:10, roofage:4, vents:9, eaves:4,
-    yearblt:5, walls:6, windows:3, deck:5, fence:4,
-    zone1:9, zone2:5, tank:2, firewood:2,
-    sprinkler:3, smoke:2, hose:1, insurance:2,
-    road:5, firestation:3, evacplan:2
+    neighborhood:10,topo:8,wildland:9,roof:10,roofage:4,vents:9,eaves:4,
+    yearblt:5,walls:6,windows:3,deck:5,fence:4,zone1:9,zone2:5,tank:2,firewood:2,
+    sprinkler:3,smoke:2,hose:1,insurance:2,road:5,firestation:3,evacplan:2
   };
 
   function recalc() {
-    let raw = 0, maxPossible = 0, answered = 0;
-    FIELDS.forEach(f => {
-      const el = document.getElementById(f);
-      if (!el || !el.value) return;
-      const v = parseInt(el.value);
-      const w = WEIGHTS[f] || 1;
-      answered++;
-      raw += v * w;
-      maxPossible += 3 * w;
+    let raw=0,maxPossible=0,answered=0;
+    FIELDS.forEach(f=>{
+      const el=document.getElementById(f);
+      if(!el||!el.value)return;
+      const v=parseInt(el.value),w=WEIGHTS[f]||1;
+      answered++;raw+=v*w;maxPossible+=3*w;
     });
-    if (answered < 4) return;
-
-    const pct = Math.max(0, Math.min(100, Math.round((raw / maxPossible) * 100)));
-    document.getElementById('score-num').textContent = pct;
-    document.getElementById('bar-fill').style.width = pct + '%';
-
-    let tier, bg, color, barColor;
-    if (pct < 25)      { tier='Low Risk';      bg='#E6F7EF'; color='var(--low)';     barColor='var(--low)'; }
-    else if (pct < 50) { tier='Moderate Risk';  bg='#FEF6E0'; color='var(--moderate)'; barColor='var(--moderate)'; }
-    else if (pct < 75) { tier='High Risk';      bg='#FCEEE8'; color='var(--high)';    barColor='var(--high)'; }
-    else               { tier='Extreme Risk';   bg='#FCEBEB'; color='var(--extreme)'; barColor='var(--extreme)'; }
-
-    const tierEl = document.getElementById('score-tier');
-    tierEl.textContent = tier;
-    tierEl.style.background = bg;
-    tierEl.style.color = color;
-    document.getElementById('bar-fill').style.background = barColor;
+    if(answered<3)return;
+    const pct=Math.max(0,Math.min(100,Math.round((raw/maxPossible)*100)));
+    document.getElementById('score-num').textContent=pct;
+    document.getElementById('bar-fill').style.width=pct+'%';
+    let tier,pillBg,pillColor;
+    if(pct<25){tier='Low Risk';pillBg='#E6F7EF';pillColor='#1A6B45';}
+    else if(pct<50){tier='Moderate Risk';pillBg='#FEF8E0';pillColor='#B07D00';}
+    else if(pct<75){tier='High Risk';pillBg='#FEF0EC';pillColor='#C84010';}
+    else{tier='Extreme Risk';pillBg='#FCEBEB';pillColor='#7A0000';}
+    const pill=document.getElementById('score-pill');
+    pill.textContent=tier;pill.style.background=pillBg;pill.style.color=pillColor;
   }
 
-  // ── COLLECT ANSWERS ───────────────────────────────────────
-  function collectAnswers() {
-    const labels = {
-      neighborhood: 'Neighborhood', topo: 'Topography', wildland: 'Distance to wildland',
-      roof: 'Roof material', roofage: 'Roof age', vents: 'Attic vents', eaves: 'Eaves type',
-      yearblt: 'Year built', walls: 'Wall material', windows: 'Window type',
-      deck: 'Deck material', fence: 'Fence', zone1: 'Defensible space Zone 1',
-      zone2: 'Defensible space Zone 2', tank: 'Propane/gas tank', firewood: 'Firewood storage',
-      sprinkler: 'Sprinkler system', smoke: 'Smoke detectors', hose: 'Hose access',
-      insurance: 'Insurance status', road: 'Road access', firestation: 'Distance to fire station',
-      evacplan: 'Evacuation plan'
+  function collectAnswers(){
+    const labels={
+      tenure:'Residency type',neighborhood:'Neighborhood',topo:'Topography',wildland:'Distance to wildland',
+      roof:'Roof material',roofage:'Roof age',vents:'Attic vents',eaves:'Eaves',
+      yearblt:'Year built',walls:'Wall material',windows:'Window type',
+      deck:'Deck material',fence:'Fence',zone1:'Defensible space Zone 1',
+      zone2:'Defensible space Zone 2',tank:'Propane/gas tank',firewood:'Firewood storage',
+      sprinkler:'Sprinkler system',smoke:'Smoke detectors',hose:'Hose access',
+      insurance:'Insurance status',road:'Road access',firestation:'Distance to fire station',
+      evacplan:'Evacuation plan'
     };
-    let lines = [];
-    const addr = document.getElementById('addr').value;
-    if (addr) lines.push(`Address: ${addr}`);
-    FIELDS.forEach(f => {
-      const el = document.getElementById(f);
-      if (!el || !el.value) return;
-      const text = el.options[el.selectedIndex].text;
-      lines.push(`${labels[f]}: ${text}`);
-    });
-    return lines.join('\n');
+    return FIELDS.filter(f=>{const el=document.getElementById(f);return el&&el.value;})
+      .map(f=>{const el=document.getElementById(f);return `${labels[f]}: ${el.options[el.selectedIndex].text}`;})
+      .join('\n');
   }
 
-  // ── GENERATE REPORT ───────────────────────────────────────
-  async function generateReport() {
-    const scoreEl = document.getElementById('score-num');
-    const score = scoreEl.textContent === '—' ? 'Not fully calculated' : scoreEl.textContent + '/100';
-    const tierText = document.getElementById('score-tier').textContent;
-    const answers = collectAnswers();
+  async function generateReport(){
+    const scoreEl=document.getElementById('score-num');
+    const score=scoreEl.textContent==='—'?'Not fully calculated':scoreEl.textContent+'/100';
+    const tier=document.getElementById('score-pill').textContent||'Unknown';
+    const answers=collectAnswers();
+    const today=new Date(Date.now()).toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
 
-    document.getElementById('form-section').style.display = 'none';
-    document.getElementById('report-section').style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.getElementById('form-section').style.display='none';
+    document.getElementById('report-section').style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'});
 
-const today = new Date().toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'});
-const prompt = `You are a wildfire risk expert specializing in Los Angeles County. Today's date is ${today}.
-HOMEOWNER'S PROPERTY DATA:
+    const prompt=`You are a wildfire risk expert specializing in Los Angeles County. Today's date is ${today}. A resident of Los Angeles — who may be a homeowner, renter, or tenant — has completed a fire risk self-assessment. Based on their answers, write a detailed, personalized fire risk report that is relevant whether or not they own their home.
+
+PROPERTY DATA:
 ${answers}
 
-CALCULATED RISK SCORE: ${score} — ${tierText}
+CALCULATED RISK SCORE: ${score} — ${tier}
 
 Write a structured report with these exact sections:
 
-1. RISK SUMMARY (2–3 sentences: overall risk level, the 2–3 biggest risk factors specific to this property)
+## Risk Summary
+2–3 sentences: overall risk level and the 2–3 biggest risk factors specific to this property.
 
-2. YOUR TOP RISK FACTORS (list the 3–5 most serious issues found, with a one-sentence explanation of why each matters for fire safety)
+## Top Risk Factors
+List the 3–5 most serious issues found. For each, give a one-sentence explanation of why it matters specifically for fire safety in LA.
 
-3. PRIORITY ACTION PLAN (list 5–7 specific steps ranked from most to least impactful, with estimated cost or effort for each)
+## Priority Action Plan
+List 5–7 specific steps ranked from most to least impactful. For each include a realistic cost or effort estimate.
 
-4. INSURANCE GUIDANCE (specific advice based on their current insurance status — mention the California FAIR Plan if relevant, and what to look for in a policy)
+## Insurance Guidance
+Specific advice based on their current insurance status. Mention the California FAIR Plan if relevant. What should they look for in a policy given their risk level?
 
-5. VEGETATION & DEFENSIBLE SPACE STEPS (specific clearing and landscaping actions for their situation)
+## Vegetation & Defensible Space
+Specific clearing and landscaping steps for their situation.
 
-6. RESOURCES (3–4 specific LA County or California resources: websites, programs, or hotlines that can help)
+## Local Resources
+3–4 specific LA County or California resources — websites, programs, or hotlines — that can help this person take action, whether they rent or own.
 
-Be specific to their actual answers — not generic advice. Use plain, clear language a homeowner can act on immediately. Do not use overly technical jargon.`;
+Be specific to their actual answers. Use plain language anyone can act on immediately. Where relevant, note if an action requires landlord permission or is something a renter can do independently.`;
 
-    try {
-      const response = await fetch('/api/generate', {
-        method: 'POST',
-        headers: {
-  'Content-Type': 'application/json',
-},
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-5',
-          max_tokens: 1000,
-          messages: [{ role: 'user', content: prompt }]
-        })
+    try{
+      const response=await fetch('/api/generate',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:1000,messages:[{role:'user',content:prompt}]})
       });
+      const data=await response.json();
+      const text=data.content?.map(b=>b.text||'').join('')||'Unable to generate report. Please try again.';
+      const formatted=text
+        .replace(/^## (.+)$/gm,'<h2>$1</h2>')
+        .replace(/^### (.+)$/gm,'<h3>$1</h3>')
+        .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g,'<em>$1</em>')
+        .replace(/^- (.+)$/gm,'<li>$1</li>')
+        .replace(/(<li>.*<\/li>(\n|$))+/g,m=>`<ul>${m}</ul>`)
+        .replace(/\s*---\s*/g,'<hr>')
+        .replace(/\n\n/g,'<br><br>')
+        .replace(/\n/g,'<br>');
 
-      const data = await response.json();
-      const text = data.content?.map(b => b.text || '').join('') || 'Unable to generate report. Please try again.';
-
-      // Style the report header based on tier
-      const tierColors = {
-        'Low Risk': { bg: 'var(--low)', grade: 'A' },
-        'Moderate Risk': { bg: 'var(--moderate)', grade: 'B' },
-        'High Risk': { bg: 'var(--high)', grade: 'C' },
-        'Extreme Risk': { bg: 'var(--extreme)', grade: 'D' },
-      };
-      const style = tierColors[tierText] || { bg: '#888', grade: '?' };
-      document.getElementById('report-grade').textContent = style.grade;
-      document.getElementById('report-grade').style.background = style.bg;
-      document.getElementById('report-title').textContent = `Your Fire Risk Report — ${tierText}`;
-      document.getElementById('report-sub').textContent = `Score: ${score} · ${new Date(Date.now()).toLocaleDateString('en-US', {month:'long', day:'numeric', year:'numeric'})}`;
-const formatted = text
-  .replace(/^### (.+)$/gm, '<h3 style="font-family:DM Serif Display,serif;font-size:1.1rem;margin:1.5rem 0 .5rem;">$1</h3>')
-  .replace(/^## (.+)$/gm, '<h2 style="font-family:DM Serif Display,serif;font-size:1.25rem;margin:1.75rem 0 .5rem;">$1</h2>')
-  .replace(/^# (.+)$/gm, '<h2 style="font-family:DM Serif Display,serif;font-size:1.35rem;margin:1.75rem 0 .5rem;">$1</h2>')
-  .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-  .replace(/\*(.+?)\*/g, '<em>$1</em>')
-  .replace(/^- (.+)$/gm, '<li style="margin:.4rem 0;padding-left:.25rem;">$1</li>')
-  .replace(/(<li.*<\/li>)/gs, '<ul style="padding-left:1.25rem;margin:.75rem 0;">$1</ul>')
-  .replace(/\n\n/g, '<br><br>')
-.replace(/\s*---\s*/g, '<hr style="border:none;border-top:1px solid #E8E2DA;margin:1.5rem 0;">').replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>')
-.replace(/\n/g, '<br>');
-
-document.getElementById('report-body').innerHTML = `<div class="report-body">${formatted}</div>`;
-    } catch (err) {
-      document.getElementById('report-body').innerHTML = `<div class="report-body">Something went wrong generating your report. Please try again.\n\nError: ${err.message}</div>`;
+      document.getElementById('report-title').textContent='Your Fire Risk Report';
+      document.getElementById('report-meta').textContent=`${tier} · Score ${score} · ${today}`;
+      const sb=document.getElementById('report-score-block');
+      sb.style.display='inline-flex';
+      document.getElementById('report-score-num').textContent=scoreEl.textContent;
+      const tc={
+        'Low Risk':{bg:'#E6F7EF',color:'#1A6B45'},
+        'Moderate Risk':{bg:'#FEF8E0',color:'#B07D00'},
+        'High Risk':{bg:'#FEF0EC',color:'#C84010'},
+        'Extreme Risk':{bg:'#FCEBEB',color:'#7A0000'}
+      }[tier]||{bg:'#F0F0F0',color:'#555'};
+      const tp=document.getElementById('report-tier-pill');
+      tp.textContent=tier;tp.style.background=tc.bg;tp.style.color=tc.color;
+      document.getElementById('report-body').innerHTML=`<div class="report-body-text">${formatted}</div>`;
+    }catch(err){
+      document.getElementById('report-body').innerHTML=`<div class="report-body-text">Something went wrong. Please try again.<br><br>Error: ${err.message}</div>`;
     }
   }
 
-  function resetForm() {
-    document.getElementById('report-section').style.display = 'none';
-    document.getElementById('form-section').style.display = 'block';
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+  function resetForm(){
+    document.getElementById('report-section').style.display='none';
+    document.getElementById('form-section').style.display='block';
+    window.scrollTo({top:0,behavior:'smooth'});
   }
 </script>
-
 </body>
 </html>
