@@ -244,7 +244,7 @@
           <option value="2">Chatsworth / Porter Ranch</option>
           <option value="1">Burbank / Glendale (flatland)</option>
           <option value="1">West LA / Santa Monica</option>
-          <option value="0">Downtown / urban core</option>
+          <option value="0">Downtown / urban core (Downtown LA, Koreatown, Mid-City, Culver City, Silver Lake, Echo Park, Inglewood)</option>
         </select></div>
       </div>
       <div class="field">
@@ -588,7 +588,9 @@
     FIELDS.forEach(f=>{
       const el=document.getElementById(f);
       if(!el||!el.value)return;
-      const v=parseInt(el.value),w=WEIGHTS[f]||1;
+      const v=parseInt(el.value);
+      if(isNaN(v))return; // skip non-numeric fields like tenure
+      const w=WEIGHTS[f]||1;
       answered++;raw+=v*w;maxPossible+=3*w;
     });
     if(answered<3)return;
@@ -641,7 +643,7 @@ CALCULATED RISK SCORE: ${score} — ${tier}
 Write a structured report with these exact sections:
 
 ## Risk Summary
-2–3 sentences: overall risk level and the 2–3 biggest risk factors specific to this property.
+2–3 sentences: overall risk level consistent with the calculated score above, and the 2–3 biggest risk factors specific to this property. Do not contradict the score — if the score is Low, describe it as low risk; if High, describe it as high risk.
 
 ## Top Risk Factors
 List the 3–5 most serious issues found. For each, give a one-sentence explanation of why it matters specifically for fire safety in LA.
@@ -658,7 +660,7 @@ Specific clearing and landscaping steps for their situation.
 ## Local Resources
 3–4 specific LA County or California resources — websites, programs, or hotlines — that can help this person take action, whether they rent or own.
 
-Be specific to their actual answers. Use plain language anyone can act on immediately. Where relevant, note if an action requires landlord permission or is something a renter can do independently.`;
+Be specific to their actual answers. Use plain language anyone can act on immediately. Where relevant, note if an action requires landlord permission or is something a renter can do independently. Proofread carefully — do not leave any incomplete or truncated words.`;
 
     try{
       const response=await fetch('/api/generate',{
