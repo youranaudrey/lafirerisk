@@ -40,8 +40,8 @@
     }
     .hero-eyebrow { display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin-bottom:1.5rem; }
     .hero-eyebrow::before,.hero-eyebrow::after { content:''; width:24px; height:1px; background:var(--accent); opacity:.5; }
-    .hero h1 { font-family:'Instrument Serif',serif; font-size:clamp(2.5rem,6vw,4rem); line-height:1.08; letter-spacing:-.02em; color:var(--black); margin-bottom:1.25rem; font-weight:400; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
-    .hero h1 em { font-style:italic; color:var(--accent); font-feature-settings:"liga" 1; text-rendering:optimizeLegibility; }
+    .hero h1 { font-family:'Instrument Serif',serif; font-size:clamp(2.5rem,6vw,4rem); line-height:1.08; letter-spacing:-.02em; color:var(--black); margin-bottom:1.25rem; }
+    .hero h1 em { font-style:italic; color:var(--accent); }
     .hero p { font-size:1.05rem; color:var(--gray-600); max-width:460px; margin:0 auto; line-height:1.7; }
 
     /* ── SCORE STRIP ── */
@@ -140,6 +140,117 @@
 
     .loading-state { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:4rem 2rem; gap:1rem; text-align:center; }
     .spinner { width:28px; height:28px; border:2px solid var(--gray-200); border-top-color:var(--black); border-radius:50%; animation:spin .7s linear infinite; }
+
+    /* ── HELPER BUTTONS ── */
+    .section-helpers { display:flex; gap:8px; margin-top:6px; flex-wrap:wrap; }
+    .helper-btn {
+      font-family:'Inter',sans-serif;
+      font-size:12px;
+      font-weight:500;
+      color:var(--accent);
+      background:var(--white);
+      border:1px solid var(--accent);
+      border-radius:100px;
+      padding:5px 12px;
+      cursor:pointer;
+      transition:border-color .2s, color .2s, background .2s;
+    }
+    .helper-btn:hover { background:#FEF0EC; }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,.45);
+      z-index:500;
+      align-items:center;
+      justify-content:center;
+      padding:1rem;
+    }
+    .modal-overlay.open { display:flex; }
+    .modal {
+      background:var(--white);
+      border-radius:var(--radius-lg);
+      max-width:560px;
+      width:100%;
+      max-height:85vh;
+      overflow-y:auto;
+      box-shadow:0 20px 60px rgba(0,0,0,.2);
+    }
+    .modal-head {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:1.25rem 1.5rem;
+      border-bottom:1px solid var(--gray-100);
+      position:sticky;
+      top:0;
+      background:var(--white);
+      z-index:1;
+    }
+    .modal-title { font-family:'Instrument Serif',serif; font-size:1.2rem; color:var(--black); }
+    .modal-close {
+      width:32px; height:32px;
+      border-radius:50%;
+      border:1px solid var(--gray-200);
+      background:var(--white);
+      cursor:pointer;
+      font-size:16px;
+      color:var(--gray-600);
+      display:flex; align-items:center; justify-content:center;
+      transition:background .2s;
+      flex-shrink:0;
+    }
+    .modal-close:hover { background:var(--gray-50); color:var(--black); }
+    .modal-body { padding:1.5rem; }
+    .modal-section { margin-bottom:1.5rem; }
+    .modal-section:last-child { margin-bottom:0; }
+    .modal-term {
+      font-size:13px;
+      font-weight:600;
+      color:var(--black);
+      margin-bottom:4px;
+    }
+    .modal-def {
+      font-size:13px;
+      color:var(--gray-600);
+      line-height:1.6;
+      margin-bottom:8px;
+    }
+    .modal-img {
+      width:100%;
+      height:160px;
+      object-fit:cover;
+      border-radius:var(--radius);
+      border:1px solid var(--gray-100);
+      background:var(--gray-50);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:12px;
+      color:var(--gray-400);
+    }
+    .modal-divider { border:none; border-top:1px solid var(--gray-100); margin:1.25rem 0; }
+
+    /* ── DOWNLOAD BUTTON ── */
+    .download-btn {
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-family:'Inter',sans-serif;
+      font-size:13px;
+      font-weight:500;
+      color:var(--accent);
+      background:var(--white);
+      border:1.5px solid var(--accent);
+      border-radius:var(--radius);
+      padding:9px 16px;
+      cursor:pointer;
+      transition:background .2s;
+    }
+    .download-btn:hover { background:#FEF0EC; }
+    .report-actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:1.5rem; }
     @keyframes spin { to { transform:rotate(360deg); } }
     .loading-label { font-size:14px; color:var(--gray-600); }
     .loading-sub { font-size:12px; color:var(--gray-400); }
@@ -151,16 +262,16 @@
       font-family:'Inter',sans-serif;
       font-size:13px;
       font-weight:500;
-      color:var(--black);
+      color:var(--accent);
       background:var(--white);
-      border:1.5px solid var(--black);
+      border:1.5px solid var(--accent);
       border-radius:var(--radius);
       padding:9px 16px;
       cursor:pointer;
       margin-top:2rem;
-      transition:background .2s, color .2s;
+      transition:background .2s;
     }
-    .reset-btn:hover { background:var(--gray-50); }
+    .reset-btn:hover { background:#FEF0EC; }
 
     /* ── FOOTER ── */
     footer { background:var(--white); border-top:1px solid var(--gray-100); padding:3rem 2rem; }
@@ -275,7 +386,14 @@
   <div class="section">
     <div class="section-header">
       <div class="section-num">02</div>
-      <div><div class="section-title">Roof</div><div class="section-sub">The single most important structural factor in fire survival</div></div>
+      <div>
+        <div class="section-title">Roof</div>
+        <div class="section-sub">The single most important structural factor in fire survival</div>
+        <div class="section-helpers">
+          <button class="helper-btn" onclick="openModal('glossary-roof')">What do these terms mean?</button>
+          <button class="helper-btn" onclick="openModal('guide-roof')">How do I find out my roof type?</button>
+        </div>
+      </div>
     </div>
     <div class="grid2">
       <div class="field">
@@ -328,7 +446,14 @@
   <div class="section">
     <div class="section-header">
       <div class="section-num">03</div>
-      <div><div class="section-title">Structure</div><div class="section-sub">Walls, windows, and exterior materials</div></div>
+      <div>
+        <div class="section-title">Structure</div>
+        <div class="section-sub">Walls, windows, and exterior materials</div>
+        <div class="section-helpers">
+          <button class="helper-btn" onclick="openModal('glossary-structure')">What do these terms mean?</button>
+          <button class="helper-btn" onclick="openModal('guide-structure')">How do I find out my wall type?</button>
+        </div>
+      </div>
     </div>
     <div class="grid2">
       <div class="field">
@@ -536,7 +661,10 @@
   <div class="report-wrap">
     <div class="report-header">
       <div class="report-eyebrow">Your Assessment</div>
-      <div class="report-title" id="report-title">Generating your report…</div>
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
+        <div class="report-title" id="report-title">Generating your report…</div>
+        <button class="download-btn" id="download-btn" onclick="downloadReport()" style="display:none;flex-shrink:0;margin-top:4px;">↓ Download</button>
+      </div>
       <div class="report-meta" id="report-meta"></div>
     </div>
     <div id="report-score-block" class="report-score-block" style="display:none">
@@ -551,7 +679,9 @@
         <div class="loading-sub">This takes about 15 seconds</div>
       </div>
     </div>
-    <button class="reset-btn" onclick="resetForm()">← Start a new assessment</button>
+    <div class="report-actions">
+      <button class="reset-btn" onclick="resetForm()">← Start a new assessment</button>
+    </div>
   </div>
 </div>
 
@@ -572,6 +702,197 @@
     </div>
   </div>
 </footer>
+
+<!-- ── MODALS ── -->
+
+<!-- Roof Glossary -->
+<div class="modal-overlay" id="modal-glossary-roof">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title">Roof Terms Explained</span>
+      <button class="modal-close" onclick="closeModal('glossary-roof')">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <div class="modal-section">
+        <div class="modal-term">Class A, B, C Roof Rating</div>
+        <div class="modal-def">A fire-resistance rating assigned to roofing materials. Class A is the most fire-resistant (clay tile, metal, asphalt shingles). Class B is moderate. Class C is the least resistant. Wood shake roofs with no fire treatment are typically Class C and are one of the biggest fire risks in LA.</div>
+        <img class="modal-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Roof_tiles_1.jpg/640px-Roof_tiles_1.jpg" alt="Clay tile roof — Class A" onerror="this.style.display='none'">
+      </div>
+
+      <hr class="modal-divider">
+
+      <div class="modal-section">
+        <div class="modal-term">Attic Vents</div>
+        <div class="modal-def">Small openings on your roof or under your eaves that allow air to circulate in your attic. During a wildfire, embers float through the air and can enter through unscreened vents, landing inside your attic and starting a fire from within. Ember-resistant vents have a very fine metal mesh (1/16 inch) that blocks embers while still allowing airflow.</div>
+        <img class="modal-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Roof_vent.jpg/640px-Roof_vent.jpg" alt="Attic vent example" onerror="this.style.display='none'">
+      </div>
+
+      <hr class="modal-divider">
+
+      <div class="modal-section">
+        <div class="modal-term">Eaves</div>
+        <div class="modal-def">The part of the roof that overhangs the walls of your house — the underside of the roof edge. Open eaves have exposed wooden rafters visible from below, which can catch embers. Enclosed (boxed) eaves have a flat soffit panel covering the rafters, blocking ember entry.</div>
+        <img class="modal-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Eaves_1.jpg/640px-Eaves_1.jpg" alt="Open vs enclosed eaves" onerror="this.style.display='none'">
+      </div>
+
+      <hr class="modal-divider">
+
+      <div class="modal-section">
+        <div class="modal-term">Wood Shake</div>
+        <div class="modal-def">Hand-split wooden shingles, usually made from cedar. They give roofs a rustic look but are highly flammable and were banned in many LA hillside areas after the 1991 Oakland Hills fire. If your home was built before the 1990s, check carefully — you may still have a wood shake roof.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Roof How-To Guide -->
+<div class="modal-overlay" id="modal-guide-roof">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title">How to Find Out Your Roof Type</span>
+      <button class="modal-close" onclick="closeModal('guide-roof')">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <div class="modal-section">
+        <div class="modal-term">1. Look from the ground</div>
+        <div class="modal-def">Stand in front of your home and look at the roof. Clay or concrete tiles are curved or flat rectangular pieces, often terracotta colored. Metal roofs have visible seams or panels. Asphalt shingles look like overlapping flat rectangles. Wood shake looks rough, uneven, and weathered gray-brown.</div>
+      </div>
+
+      <hr class="modal-divider">
+
+      <div class="modal-section">
+        <div class="modal-term">2. Check your home inspection report</div>
+        <div class="modal-def">If you purchased or rented your home recently, the inspection report will list the roof type, age, and condition. Look for a PDF in your email or paperwork from your real estate transaction.</div>
+      </div>
+
+      <hr class="modal-divider">
+
+      <div class="modal-section">
+        <div class="modal-term">3. Ask your landlord or property manager</div>
+        <div class="modal-def">If you rent, your landlord is required to know basic facts about the property. Send a quick email or text asking: "What type of roofing material does the building have, and approximately how old is the roof?"</div>
+      </div>
+
+      <hr class="modal-divider">
+
+      <div class="modal-section">
+        <div class="modal-term">4. Look up your property on the LA County Assessor</div>
+        <div class="modal-def">Go to <strong>assessor.lacounty.gov</strong>, enter your address, and look at the property details. It often lists construction materials including roof type. This is free and public information.</div>
+      </div>
+
+      <hr class="modal-divider">
+
+      <div class="modal-section">
+        <div class="modal-term">5. Check for attic vents</div>
+        <div class="modal-def">Walk around your home and look for small rectangular or triangular grilles under the eave overhangs or on the roof. If you can see through them easily (mesh looks large), those are standard vents. If they have very fine metal mesh, they may already be ember-resistant. If unsure, select "Don't know" — it's better to be cautious.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Structure Glossary -->
+<div class="modal-overlay" id="modal-glossary-structure">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title">Structure Terms Explained</span>
+      <button class="modal-close" onclick="closeModal('glossary-structure')">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <div class="modal-section">
+        <div class="modal-term">Stucco</div>
+        <div class="modal-def">A cement-based plaster applied to the outside of walls, giving them a textured, sand-like finish. Very common in LA. Stucco is non-combustible and one of the best wall materials for fire resistance. Most Spanish-style and mid-century homes in LA have stucco exteriors.</div>
+        <img class="modal-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/Stucco_wall.jpg/640px-Stucco_wall.jpg" alt="Stucco wall example" onerror="this.style.display='none'">
+      </div>
+
+      <hr class="modal-divider">
+
+      <div class="modal-section">
+        <div class="modal-term">Masonry</div>
+        <div class="modal-def">Construction using brick, stone, concrete blocks, or similar materials. Masonry walls are non-combustible and highly fire-resistant. You can usually identify them by the visible brick or block pattern, or by the solid, hard feel of the wall surface.</div>
+      </div>
+
+      <hr class="modal-divider">
+
+      <div class="modal-section">
+        <div class="modal-term">Fiber Cement (Hardie Board)</div>
+        <div class="modal-def">A manufactured material made from cement, sand, and cellulose fibers, used as siding panels. It looks like wood but is much more fire-resistant. James Hardie is the most common brand. It's often used in newer construction or renovations as a safer alternative to wood siding.</div>
+      </div>
+
+      <hr class="modal-divider">
+
+      <div class="modal-section">
+        <div class="modal-term">Wood Siding / Lap Board</div>
+        <div class="modal-def">Horizontal wooden planks attached to the exterior of the house. Highly combustible — direct flame or radiant heat from a nearby fire can ignite wood siding quickly. Common in older craftsman bungalows and some mid-century homes.</div>
+        <img class="modal-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Lap_siding.jpg/640px-Lap_siding.jpg" alt="Wood lap siding" onerror="this.style.display='none'">
+      </div>
+
+      <hr class="modal-divider">
+
+      <div class="modal-section">
+        <div class="modal-term">Vinyl Siding</div>
+        <div class="modal-def">Plastic panels used as exterior cladding. While vinyl doesn't easily ignite from a spark, it melts and deforms under intense radiant heat, which can expose the underlying structure. More common in newer apartment buildings than single-family homes in LA.</div>
+      </div>
+
+      <hr class="modal-divider">
+
+      <div class="modal-section">
+        <div class="modal-term">WUI Building Codes (2008)</div>
+        <div class="modal-def">WUI stands for Wildland-Urban Interface — areas where buildings and wildland vegetation meet. California adopted stronger fire-resistant building codes for these zones in 2008. Homes built after 2008 in WUI areas are required to use ember-resistant vents, fire-rated materials, and other protective features. If your home was built before 2008, it may not meet current fire safety standards.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Structure How-To Guide -->
+<div class="modal-overlay" id="modal-guide-structure">
+  <div class="modal">
+    <div class="modal-head">
+      <span class="modal-title">How to Find Out Your Wall & Window Type</span>
+      <button class="modal-close" onclick="closeModal('guide-structure')">✕</button>
+    </div>
+    <div class="modal-body">
+
+      <div class="modal-section">
+        <div class="modal-term">1. Touch and look at the exterior walls</div>
+        <div class="modal-def">Run your hand along an exterior wall. Rough, sandy, and hard = stucco. Smooth plastic panels = vinyl siding. Rough wooden planks with visible grain and paint = wood siding. Brick pattern = masonry. Flat panels with a slight texture, painted = possibly fiber cement.</div>
+      </div>
+
+      <hr class="modal-divider">
+
+      <div class="modal-section">
+        <div class="modal-term">2. Look at the corners and edges</div>
+        <div class="modal-def">The edges of the house often reveal the material. Wood siding has visible end grain at the corners. Stucco wraps continuously. Fiber cement panels have clean, flat cut edges. Vinyl siding has a slight hollow sound if you knock on it.</div>
+      </div>
+
+      <hr class="modal-divider">
+
+      <div class="modal-section">
+        <div class="modal-term">3. Check the LA County Assessor website</div>
+        <div class="modal-def">Go to <strong>assessor.lacounty.gov</strong> and search your address. The property record often lists exterior wall construction type and year built — both useful for this form.</div>
+      </div>
+
+      <hr class="modal-divider">
+
+      <div class="modal-section">
+        <div class="modal-term">4. For windows — look at the frame edge</div>
+        <div class="modal-def">Open a window and look at the edge of the glass from the side. Single-pane glass is one thin layer. Dual-pane has two layers of glass with a visible gap (often a spacer bar) between them. Dual-pane windows are noticeably thicker. If your home was built before 1990 and windows haven't been replaced, they are likely single-pane.</div>
+      </div>
+
+      <hr class="modal-divider">
+
+      <div class="modal-section">
+        <div class="modal-term">5. Ask your building manager or check permits</div>
+        <div class="modal-def">If you rent, ask your property manager. If you own, you can look up building permits at <strong>ladbs.org</strong> (LA Department of Building and Safety) to see what materials were used in original construction or renovations.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <script>
   const FIELDS = ['tenure','neighborhood','topo','wildland','roof','roofage','vents','eaves',
@@ -666,7 +987,7 @@ Be specific to their actual answers. Use plain language anyone can act on immedi
       const response=await fetch('/api/generate',{
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:1000,messages:[{role:'user',content:prompt}]})
+        body:JSON.stringify({model:'claude-sonnet-4-5',max_tokens:2000,messages:[{role:'user',content:prompt}]})
       });
       const data=await response.json();
       const text=data.content?.map(b=>b.text||'').join('')||'Unable to generate report. Please try again.';
@@ -683,6 +1004,7 @@ Be specific to their actual answers. Use plain language anyone can act on immedi
 
       document.getElementById('report-title').textContent='Your Fire Risk Report';
       document.getElementById('report-meta').textContent=`${tier} · Score ${score} · ${today}`;
+      document.getElementById('download-btn').style.display='inline-flex';
       const sb=document.getElementById('report-score-block');
       sb.style.display='inline-flex';
       document.getElementById('report-score-num').textContent=scoreEl.textContent;
@@ -701,9 +1023,98 @@ Be specific to their actual answers. Use plain language anyone can act on immedi
   }
 
   function resetForm(){
+    // Clear all form fields
+    FIELDS.forEach(f=>{
+      const el=document.getElementById(f);
+      if(el) el.value='';
+    });
+    // Reset score strip
+    document.getElementById('score-num').textContent='—';
+    document.getElementById('bar-fill').style.width='0%';
+    const pill=document.getElementById('score-pill');
+    pill.textContent='Answer questions below';
+    pill.style.background='var(--gray-100)';
+    pill.style.color='var(--gray-600)';
+    // Hide download button for next report
+    document.getElementById('download-btn').style.display='none';
+    // Reset report body for next time
+    document.getElementById('report-body').innerHTML='<div class="loading-state"><div class="spinner"></div><div class="loading-label">Analyzing your property…</div><div class="loading-sub">This takes about 15 seconds</div></div>';
+    document.getElementById('report-title').textContent='Generating your report…';
+    document.getElementById('report-meta').textContent='';
+    document.getElementById('report-score-block').style.display='none';
+    // Show form
     document.getElementById('report-section').style.display='none';
     document.getElementById('form-section').style.display='block';
     window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  // ── MODAL ──
+  function openModal(id){
+    document.getElementById('modal-'+id).classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+  function closeModal(id){
+    document.getElementById('modal-'+id).classList.remove('open');
+    document.body.style.overflow='';
+  }
+  // Close modal on overlay click
+  document.querySelectorAll('.modal-overlay').forEach(el=>{
+    el.addEventListener('click', e=>{ if(e.target===el) closeModal(el.id.replace('modal-','')) });
+  });
+  // Close on Escape key
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') document.querySelectorAll('.modal-overlay.open').forEach(el=>closeModal(el.id.replace('modal-',''))) });
+
+  // ── DOWNLOAD REPORT ──
+  function downloadReport(){
+    const title = document.getElementById('report-title').textContent;
+    const meta = document.getElementById('report-meta').textContent;
+    const score = document.getElementById('report-score-num').textContent;
+    const tier = document.getElementById('report-tier-pill').textContent;
+    const body = document.getElementById('report-body').innerText;
+
+    const html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>LA Fire Risk Report</title>
+  <style>
+    body { font-family: Georgia, serif; max-width: 680px; margin: 40px auto; padding: 0 2rem; color: #0A0A0A; line-height: 1.7; }
+    .header { border-bottom: 2px solid #0A0A0A; padding-bottom: 1.5rem; margin-bottom: 2rem; }
+    .logo { font-size: 13px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: #E63B1F; margin-bottom: 1rem; }
+    h1 { font-size: 2rem; margin-bottom: .5rem; }
+    .meta { font-size: 13px; color: #9E9E97; }
+    .score-block { display: inline-block; background: #F7F7F5; border: 1px solid #EFEFED; border-radius: 12px; padding: 12px 20px; margin-bottom: 2rem; }
+    .score-num { font-size: 2.5rem; font-weight: 700; }
+    .tier { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-left: 10px; }
+    h2 { font-size: 1.2rem; margin: 2rem 0 .75rem; padding-top: 1.5rem; border-top: 1px solid #EFEFED; }
+    p { margin-bottom: 1rem; }
+    .footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #EFEFED; font-size: 12px; color: #9E9E97; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo">LA Fire Risk</div>
+    <h1>${title}</h1>
+    <div class="meta">${meta}</div>
+  </div>
+  <div class="score-block">
+    <span class="score-num">${score}</span><span class="meta"> / 100</span>
+    <span class="tier">${tier}</span>
+  </div>
+  <div>${body.replace(/\n/g,'<br>')}</div>
+  <div class="footer">
+    This report was generated by LA Fire Risk (lafirerisk.com). It is for informational purposes only and does not constitute a professional inspection or insurance evaluation. Always consult a licensed professional and your local fire department for official guidance.
+  </div>
+</body>
+</html>`;
+
+    const blob = new Blob([html], {type:'text/html'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'LA-Fire-Risk-Report.html';
+    a.click();
+    URL.revokeObjectURL(url);
   }
 </script>
 </body>
